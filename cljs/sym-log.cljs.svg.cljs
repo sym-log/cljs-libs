@@ -8,6 +8,17 @@
             )
   )
 
+; EXAMPLE USAGE of FUNCTIONS IN THIS SECTION
+;(def files (sym-log.cljs.fs.fileFactory. 5242880 (goog.events.EventTarget.)))
+;(.readFile files "drawing.svg")
+;(.addCallback (goog.fs.FileReader.readAsText (.-fReader files)) (fn [txt] (def filestuff txt)))
+
+;(def mark (JSON.parse
+;           (sym-log.cljs.svg.svgTags->JSONstr
+;            (sym-log.cljs.svg.getSvgTags
+;              (sym-log.cljs.svg.sanitize-svg filestuff "optimized-inkscape")))))
+
+
 
 (defn fetchSVGnode [container]
      "takes a reference to a specific dom element, e.g. returned by get getElementById"
@@ -27,6 +38,46 @@
        svgRoot
        )
 )      
+
+(deftype svgJsObj->domNode [] Object
+    "EXAMPLE USAGE
+      (def var1
+        (JSON.parse 
+          (sym-log.cljs.svg.svgTags->JSONstr
+            (sym-log.cljs.svg.getSvgTags
+             (sym-log.cljs.svg.sanitize-svg filestuff optimized-inkscape)))))
+
+      (def var2 (.object->node (sym-log.cljs.svg.svgJsObj->domNode.)
+                     (goog.dom.getElement "containerDiv") var1))
+
+      (.appendChild (goog.dom.getElement "svgContainer") var2)"
+         
+  (object->node [this container jsObj ]
+      ( let [ keys (goog.object.getKeys jsObj)
+              tag  (goog.global.document.createElementNS
+                    "http://www.w3.org/2000/svg" (. jsObj -name)) ]
+       
+        (if (. jsObj -attributes)
+          (if (=(.-length keys)2)
+            
+            (goog.object.forEach (. jsObj -attributes)
+                (fn [val name jsObj]
+                  (.setAttribute tag name val)))
+            
+            (do
+              (goog.object.forEach (. jsObj -attributes)
+                (fn [val name jsObj]
+                  (.setAttribute tag name val)))
+              (.forEach (.slice keys 2 (. keys -length))
+                  (fn [val index arr ]
+                     (.appendChild tag (.object->node this tag (aget jsObj val)))))))
+                      
+         (.forEach (.slice keys 1 (. keys -length))
+             (fn [val index arr] 
+               (.appendChild tag (.object->node this tag (aget jsObj val))))))
+        
+  tag )))
+ 
 
 (defn initSVGnode [ jsObj container ] 
 
