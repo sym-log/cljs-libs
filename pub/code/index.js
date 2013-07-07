@@ -13528,16 +13528,8 @@ cljs.core.special_symbol_QMARK_ = function(a) {
   "js*", "js*", -1640426054, null), null, new cljs.core.Symbol(null, "defrecord*", "defrecord*", 774272013, null), null, new cljs.core.Symbol(null, "let*", "let*", -1637213400, null), null, new cljs.core.Symbol(null, "loop*", "loop*", -1537374273, null), null, new cljs.core.Symbol(null, "if", "if", -1640528170, null), null, new cljs.core.Symbol(null, "def", "def", -1640432194, null), null], !0), a)
 };
 var sym_log = {cljs:{}};
-sym_log.cljs.string = {};
-sym_log.cljs.string.fetch_first_in_string = function(a, b, c) {
-  var d = [];
-  b.forEach(function(b) {
-    return d[a.indexOf(b, c - 1)] = b
-  });
-  return d.filter(function(a) {
-    return cljs.core._EQ_.call(null, a, null) ? null : a
-  })[0]
-};
+sym_log.cljs.util = {};
+sym_log.cljs.util.video = {};
 goog.disposable = {};
 goog.disposable.IDisposable = function() {
 };
@@ -17035,6 +17027,64 @@ goog.fs.FileWriter.prototype.truncate = function(a) {
     throw new goog.fs.Error(b.code, "truncating file");
   }
 };
+sym_log.cljs.pdb = {};
+sym_log.cljs.pdb.getPouchDB = function(a, b) {
+  var c = new sym_log.cljs.pdb.pouchDB(a);
+  c.open(b);
+  c.dbName = b;
+  return c
+};
+sym_log.cljs.pdb.pouchDB = function(a) {
+  this.evTarget = a
+};
+sym_log.cljs.pdb.pouchDB.cljs$lang$type = !0;
+sym_log.cljs.pdb.pouchDB.cljs$lang$ctorStr = "sym-log.cljs.pdb/pouchDB";
+sym_log.cljs.pdb.pouchDB.cljs$lang$ctorPrWriter = function(a, b, c) {
+  return cljs.core._write.call(null, b, "sym-log.cljs.pdb/pouchDB")
+};
+sym_log.cljs.pdb.pouchDB.prototype.listDBs = function() {
+  var a = this;
+  return Pouch.allDbs.call(null, function(b, c) {
+    a.dBlist = c
+  })
+};
+sym_log.cljs.pdb.pouchDB.prototype.open = function(a) {
+  this.DB = new Pouch(a);
+  return this.evTarget.dispatchEvent("dataBaseReady")
+};
+sym_log.cljs.pdb.pouchDB.prototype.put = function(a) {
+  var b = this, c = this;
+  return c.DB.put.call(null, a, function(a, e) {
+    c.response = e;
+    return b.evTarget.dispatchEvent("putSuccess")
+  })
+};
+sym_log.cljs.pdb.pouchDB.prototype.get = function(a) {
+  var b = this, c = this;
+  return c.DB.get.call(null, a, function(a, e) {
+    c.response = e;
+    return b.evTarget.dispatchEvent("getSuccess")
+  })
+};
+sym_log.cljs.pdb.pouchDB.prototype.query = function(a) {
+  var b = this, c = this;
+  return c.DB.query.call(null, {map:a}, {reduce:!1}, function(a, e) {
+    c.response = e;
+    return b.evTarget.dispatchEvent("queryDone")
+  })
+};
+sym_log.cljs.pdb.pouchDB.prototype.replicateTo = function(a) {
+  var b = this;
+  return Pouch.replicate(b.dbName, a, function(a, d) {
+    b.response = d
+  })
+};
+sym_log.cljs.pdb.pouchDB.prototype.replicateFrom = function(a) {
+  var b = this;
+  return Pouch.replicate(a, b.dbName, function(a, d) {
+    b.response = d
+  })
+};
 goog.Uri = function(a, b) {
   var c;
   a instanceof goog.Uri ? (this.ignoreCase_ = goog.isDef(b) ? b : a.getIgnoreCase(), this.setScheme(a.getScheme()), this.setUserInfo(a.getUserInfo()), this.setDomain(a.getDomain()), this.setPort(a.getPort()), this.setPath(a.getPath()), this.setQueryData(a.getQueryData().clone()), this.setFragment(a.getFragment())) : a && (c = goog.uri.utils.split(String(a))) ? (this.ignoreCase_ = !!b, this.setScheme(c[goog.uri.utils.ComponentIndex.SCHEME] || "", !0), this.setUserInfo(c[goog.uri.utils.ComponentIndex.USER_INFO] || 
@@ -18771,7 +18821,6 @@ goog.ui.IdGenerator.prototype.getNextUniqueId = function() {
   return":" + (this.nextId_++).toString(36)
 };
 goog.ui.IdGenerator.instance = goog.ui.IdGenerator.getInstance();
-sym_log.cljs.util = {};
 sym_log.cljs.util.function_QMARK_ = function(a) {
   return cljs.core._EQ_.call(null, cljs.core.type.call(null, a), cljs.core.type.call(null, Function)) ? !0 : !1
 };
@@ -21162,6 +21211,26 @@ sym_log.cljs.svg.fetchSVGnode = function(a) {
   cljs.core._EQ_.call(null, [cljs.core.str(a.id), cljs.core.str(".svgRoot")].join(""), b.id) || (b.setAttribute("id", [cljs.core.str(a.id), cljs.core.str(".svgRoot")].join("")), goog.dom.appendChild(a, b));
   return b
 };
+sym_log.cljs.svg.svgJsObj__GT_domNode = function() {
+};
+sym_log.cljs.svg.svgJsObj__GT_domNode.cljs$lang$type = !0;
+sym_log.cljs.svg.svgJsObj__GT_domNode.cljs$lang$ctorStr = "sym-log.cljs.svg/svgJsObj-\x3edomNode";
+sym_log.cljs.svg.svgJsObj__GT_domNode.cljs$lang$ctorPrWriter = function(a, b, c) {
+  return cljs.core._write.call(null, b, "sym-log.cljs.svg/svgJsObj-\x3edomNode")
+};
+sym_log.cljs.svg.svgJsObj__GT_domNode.prototype.object__GT_node = function(a, b) {
+  var c = this, d = goog.object.getKeys(b), e = goog.global.document.createElementNS("http://www.w3.org/2000/svg", b.name);
+  cljs.core.truth_(b.attributes) ? cljs.core._EQ_.call(null, d.length, 2) ? goog.object.forEach(b.attributes, function(a, b, c) {
+    return e.setAttribute(b, a)
+  }) : (goog.object.forEach(b.attributes, function(a, b, c) {
+    return e.setAttribute(b, a)
+  }), d.slice(2, d.length).forEach(function(a, d, h) {
+    return e.appendChild(c.object__GT_node(e, b[a]))
+  })) : d.slice(1, d.length).forEach(function(a, d, h) {
+    return e.appendChild(c.object__GT_node(e, b[a]))
+  });
+  return e
+};
 sym_log.cljs.svg.initSVGnode = function(a, b) {
   var c = sym_log.cljs.svg.fetchSVGnode.call(null, b), d = goog.global.document.createElementNS("http://www.w3.org/2000/svg", a.form), e = a.id, f = cljs.core.js__GT_clj.call(null, a.attributes);
   a.selected = !1;
@@ -21216,11 +21285,11 @@ sym_log.cljs.svg.svgTags__GT_JSONstr = function(a) {
       if(cljs.core._EQ_.call(null, "openTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g))) {
         cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []);
         var h;
-        cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"_":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("_", f[cljs.core.deref.call(null, e)].length + 1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]);
+        cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"#":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("#", f[cljs.core.deref.call(null, e)].length + 1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]);
         cljs.core._EQ_.call(null, 0, cljs.core.deref.call(null, e)) ? cljs.core.swap_BANG_.call(null, d, cljs.core.str, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g)) : cljs.core.swap_BANG_.call(null, d, cljs.core.str, ",", h, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g));
         cljs.core.swap_BANG_.call(null, e, cljs.core.inc)
       }else {
-        cljs.core._EQ_.call(null, "closedTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) ? (cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []), cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"_":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("_", f[cljs.core.deref.call(null, e)].length + 
+        cljs.core._EQ_.call(null, "closedTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) ? (cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []), cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"#":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("#", f[cljs.core.deref.call(null, e)].length + 
         1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]), cljs.core._EQ_.call(null, 0, cljs.core.deref.call(null, e)) ? cljs.core.swap_BANG_.call(null, d, cljs.core.str, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g)) : cljs.core.swap_BANG_.call(null, d, cljs.core.str, ",", h, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g))) : cljs.core._EQ_.call(null, "closingTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) && (cljs.core.swap_BANG_.call(null, 
         d, cljs.core.str, "}"), cljs.core.swap_BANG_.call(null, e, cljs.core.dec))
       }
@@ -21283,7 +21352,6 @@ sym_log.cljs.fs.fileFactory.prototype.writeFile = function(a) {
     })
   })
 };
-sym_log.cljs.util.video = {};
 sym_log.cljs.idb = {};
 sym_log.cljs.idb.IdbWrapper = function() {
   var a = this;
@@ -21307,4 +21375,14 @@ sym_log.cljs.threads.create_worker = function(a, b) {
   sym_log.cljs.threads.worker = new Worker(window.URL.createObjectURL(new Blob([[cljs.core.str("onmessage \x3d"), cljs.core.str(a)].join("")])));
   sym_log.cljs.threads.worker.onmessage = b;
   return sym_log.cljs.threads.worker
+};
+sym_log.cljs.string = {};
+sym_log.cljs.string.fetch_first_in_string = function(a, b, c) {
+  var d = [];
+  b.forEach(function(b) {
+    return d[a.indexOf(b, c - 1)] = b
+  });
+  return d.filter(function(a) {
+    return cljs.core._EQ_.call(null, a, null) ? null : a
+  })[0]
 };

@@ -40,17 +40,17 @@
 )      
 
 (deftype svgJsObj->domNode [] Object
-    "EXAMPLE USAGE
-      (def var1
-        (JSON.parse 
-          (sym-log.cljs.svg.svgTags->JSONstr
-            (sym-log.cljs.svg.getSvgTags
-             (sym-log.cljs.svg.sanitize-svg filestuff optimized-inkscape)))))
-
-      (def var2 (.object->node (sym-log.cljs.svg.svgJsObj->domNode.)
-                     (goog.dom.getElement "containerDiv") var1))
-
-      (.appendChild (goog.dom.getElement "svgContainer") var2)"
+;    "EXAMPLE USAGE
+;      (def var1
+;        (JSON.parse 
+;          (sym-log.cljs.svg.svgTags->JSONstr
+;            (sym-log.cljs.svg.getSvgTags
+;             (sym-log.cljs.svg.sanitize-svg filestuff optimized-inkscape)))))
+;
+;      (def var2 (.object->node (sym-log.cljs.svg.svgJsObj->domNode.)
+;                     (goog.dom.getElement containerDiv) var1))
+;
+;      (.appendChild (goog.dom.getElement svgContainer) var2)"
          
   (object->node [this container jsObj ]
       ( let [ keys (goog.object.getKeys jsObj)
@@ -77,7 +77,7 @@
                (.appendChild tag (.object->node this tag (aget jsObj val))))))
         
   tag )))
- 
+
 
 (defn initSVGnode [ jsObj container ] 
 
@@ -180,9 +180,9 @@
            (do
              (if-not (aget levelMx @level) (aset levelMx @level (array)))
              (let [prefix
-                   (if (= 0 (.-length (aget levelMx @level))) (do (aset levelMx @level 0 "\"_\":") )
+                   (if (= 0 (.-length (aget levelMx @level))) (do (aset levelMx @level 0 "\"#\":") )
                       (do (aset levelMx @level (.-length (aget levelMx @level))
-                        (str "\"" (goog.string.repeat "_" (+(.-length (aget levelMx @level))1)) "\":"))
+                        (str "\"" (goog.string.repeat "#" (+(.-length (aget levelMx @level))1)) "\":"))
                        (aget levelMx @level (-(.-length (aget levelMx @level)) 1))))     ]
 
               (if (= 0 @level)
@@ -197,9 +197,10 @@
              (if-not (aget levelMx @level) (aset levelMx @level (array)))
              (let [prefix
                       (if (= 0 (.-length (aget levelMx @level)))
-                        (do (aset levelMx @level 0 "\"_\":"))
+                        (do (aset levelMx @level 0 "\"#\":"))
                         (do (aset levelMx @level (.-length (aget levelMx @level))
-                         (str "\"" (goog.string.repeat "_" (+(.-length (aget levelMx @level))1)) "\":"))                           (aget levelMx @level (-(.-length (aget levelMx @level)) 1))))    ]
+                                  (str "\"" (goog.string.repeat "#" (+(.-length (aget levelMx @level))1)) "\":"))
+                            (aget levelMx @level (-(.-length (aget levelMx @level)) 1))))    ]
 
                (if (= 0 @level)
                  (swap! JSONstr str (svgTag->JSON tagStr))
