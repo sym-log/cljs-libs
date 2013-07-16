@@ -24,7 +24,7 @@ sym_log.cljs.util.json__GT_clj = (function json__GT_clj(line){
 return cljs.core.js__GT_clj.call(null,JSON.parse.call(null,line));
 });
 sym_log.cljs.util.uniquify = (function uniquify(prefix){
-return [cljs.core.str(prefix),cljs.core.str(goog.string.removeAll(goog.ui.IdGenerator.getInstance().getNextUniqueId(),":"))].join('');
+return [cljs.core.str(prefix),cljs.core.str("_"),cljs.core.str(goog.string.removeAll(goog.ui.IdGenerator.getInstance().getNextUniqueId(),":"))].join('');
 });
 sym_log.cljs.util.json__GT_jsob = (function json__GT_jsob(json,targetNS,objName){
 var jsObj = eval([cljs.core.str([cljs.core.str(targetNS),cljs.core.str("."),cljs.core.str(objName),cljs.core.str(" = JSON.parse('"),cljs.core.str(json),cljs.core.str("');")].join(''))].join(''));

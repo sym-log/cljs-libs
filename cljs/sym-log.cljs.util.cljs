@@ -20,7 +20,7 @@
 
 (defn uniquify [prefix]
   "for a given name  previx <string> will assign a unique number to the end"
-  (str prefix (goog.string.removeAll (.getNextUniqueId (goog.ui.IdGenerator.getInstance)) ":")))
+  (str prefix "_" (goog.string.removeAll (.getNextUniqueId (goog.ui.IdGenerator.getInstance)) ":")))
 
 
 (defn json->jsob [json targetNS objName ]

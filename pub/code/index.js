@@ -18831,7 +18831,7 @@ sym_log.cljs.util.json__GT_clj = function(a) {
   return cljs.core.js__GT_clj.call(null, JSON.parse.call(null, a))
 };
 sym_log.cljs.util.uniquify = function(a) {
-  return[cljs.core.str(a), cljs.core.str(goog.string.removeAll(goog.ui.IdGenerator.getInstance().getNextUniqueId(), ":"))].join("")
+  return[cljs.core.str(a), cljs.core.str("_"), cljs.core.str(goog.string.removeAll(goog.ui.IdGenerator.getInstance().getNextUniqueId(), ":"))].join("")
 };
 sym_log.cljs.util.json__GT_jsob = function(a, b, c) {
   a = eval("" + cljs.core.str([cljs.core.str(b), cljs.core.str("."), cljs.core.str(c), cljs.core.str(" \x3d JSON.parse('"), cljs.core.str(a), cljs.core.str("');")].join("")));
@@ -21219,17 +21219,15 @@ sym_log.cljs.svg.svgJsObj__GT_domNode.cljs$lang$ctorPrWriter = function(a, b, c)
   return cljs.core._write.call(null, b, "sym-log.cljs.svg/svgJsObj-\x3edomNode")
 };
 sym_log.cljs.svg.svgJsObj__GT_domNode.prototype.object__GT_node = function(a, b) {
-  var c = this, d = goog.object.getKeys(b), e = goog.global.document.createElementNS("http://www.w3.org/2000/svg", b.name);
-  cljs.core.truth_(b.attributes) ? cljs.core._EQ_.call(null, d.length, 2) ? goog.object.forEach(b.attributes, function(a, b, c) {
-    return e.setAttribute(b, a)
-  }) : (goog.object.forEach(b.attributes, function(a, b, c) {
-    return e.setAttribute(b, a)
-  }), d.slice(2, d.length).forEach(function(a, d, h) {
-    return e.appendChild(c.object__GT_node(e, b[a]))
-  })) : d.slice(1, d.length).forEach(function(a, d, h) {
-    return e.appendChild(c.object__GT_node(e, b[a]))
+  var c = this;
+  goog.object.getKeys(b);
+  var d = goog.global.document.createElementNS("http://www.w3.org/2000/svg", b.name);
+  goog.object.forEach(b, function(a, b, g) {
+    return cljs.core.truth_(goog.string.contains(b, "attributes")) ? goog.object.forEach(g.attributes, function(a, b, c) {
+      return d.setAttribute(b, a)
+    }) : cljs.core.truth_(goog.string.contains(b, "_id")) ? d.setAttribute("id", a) : cljs.core.truth_(goog.string.contains(b, "\u0394")) ? d.appendChild(c.object__GT_node(d, a)) : null
   });
-  return e
+  return d
 };
 sym_log.cljs.svg.initSVGnode = function(a, b) {
   var c = sym_log.cljs.svg.fetchSVGnode.call(null, b), d = goog.global.document.createElementNS("http://www.w3.org/2000/svg", a.form), e = a.id, f = cljs.core.js__GT_clj.call(null, a.attributes);
@@ -21279,19 +21277,19 @@ sym_log.cljs.svg.svgTagType_QMARK_ = function(a) {
     return b ? cljs.core._EQ_.call(null, a[a.length - 1], "\x3e") : b
   }() ? "openTag" : null
 };
-sym_log.cljs.svg.svgTags__GT_JSONstr = function(a) {
+sym_log.cljs.svg.svgTags__GT_JSON = function(a) {
   for(var b = cljs.core.atom.call(null, 0), c = a.length - 1, d = cljs.core.atom.call(null, ""), e = cljs.core.atom.call(null, 0), f = [], g = a[cljs.core.deref.call(null, b)];;) {
     if(c >= cljs.core.deref.call(null, b)) {
       if(cljs.core._EQ_.call(null, "openTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g))) {
         cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []);
         var h;
-        cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"#":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("#", f[cljs.core.deref.call(null, e)].length + 1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]);
+        cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"\u0394":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("\u0394", f[cljs.core.deref.call(null, e)].length + 1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]);
         cljs.core._EQ_.call(null, 0, cljs.core.deref.call(null, e)) ? cljs.core.swap_BANG_.call(null, d, cljs.core.str, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g)) : cljs.core.swap_BANG_.call(null, d, cljs.core.str, ",", h, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g));
         cljs.core.swap_BANG_.call(null, e, cljs.core.inc)
       }else {
-        cljs.core._EQ_.call(null, "closedTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) ? (cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []), cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"#":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("#", f[cljs.core.deref.call(null, e)].length + 
-        1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]), cljs.core._EQ_.call(null, 0, cljs.core.deref.call(null, e)) ? cljs.core.swap_BANG_.call(null, d, cljs.core.str, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g)) : cljs.core.swap_BANG_.call(null, d, cljs.core.str, ",", h, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g))) : cljs.core._EQ_.call(null, "closingTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) && (cljs.core.swap_BANG_.call(null, 
-        d, cljs.core.str, "}"), cljs.core.swap_BANG_.call(null, e, cljs.core.dec))
+        cljs.core._EQ_.call(null, "closedTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) ? (cljs.core.not.call(null, f[cljs.core.deref.call(null, e)]) && (f[cljs.core.deref.call(null, e)] = []), cljs.core._EQ_.call(null, 0, f[cljs.core.deref.call(null, e)].length) ? h = f[cljs.core.deref.call(null, e)][0] = '"\u0394":' : (f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length] = [cljs.core.str('"'), cljs.core.str(goog.string.repeat("\u0394", f[cljs.core.deref.call(null, 
+        e)].length + 1)), cljs.core.str('":')].join(""), h = f[cljs.core.deref.call(null, e)][f[cljs.core.deref.call(null, e)].length - 1]), cljs.core._EQ_.call(null, 0, cljs.core.deref.call(null, e)) ? cljs.core.swap_BANG_.call(null, d, cljs.core.str, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g)) : cljs.core.swap_BANG_.call(null, d, cljs.core.str, ",", h, sym_log.cljs.svg.svgTag__GT_JSON.call(null, g))) : cljs.core._EQ_.call(null, "closingTag", sym_log.cljs.svg.svgTagType_QMARK_.call(null, g)) && 
+        (cljs.core.swap_BANG_.call(null, d, cljs.core.str, "}"), cljs.core.swap_BANG_.call(null, e, cljs.core.dec))
       }
       g = a[cljs.core.swap_BANG_.call(null, b, cljs.core.inc)]
     }else {

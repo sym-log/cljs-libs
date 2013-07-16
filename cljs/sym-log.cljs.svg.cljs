@@ -14,7 +14,7 @@
 ;(.addCallback (goog.fs.FileReader.readAsText (.-fReader files)) (fn [txt] (def filestuff txt)))
 
 ;(def mark (JSON.parse
-;           (sym-log.cljs.svg.svgTags->JSONstr
+;           (sym-log.cljs.svg.svgTags->JSON
 ;            (sym-log.cljs.svg.getSvgTags
 ;              (sym-log.cljs.svg.sanitize-svg filestuff "optimized-inkscape")))))
 
@@ -39,44 +39,31 @@
        )
 )      
 
+
 (deftype svgJsObj->domNode [] Object
-;    "EXAMPLE USAGE
-;      (def var1
-;        (JSON.parse 
-;          (sym-log.cljs.svg.svgTags->JSONstr
-;            (sym-log.cljs.svg.getSvgTags
-;             (sym-log.cljs.svg.sanitize-svg filestuff optimized-inkscape)))))
-;
-;      (def var2 (.object->node (sym-log.cljs.svg.svgJsObj->domNode.)
-;                     (goog.dom.getElement containerDiv) var1))
-;
-;      (.appendChild (goog.dom.getElement svgContainer) var2)"
          
   (object->node [this container jsObj ]
       ( let [ keys (goog.object.getKeys jsObj)
               tag  (goog.global.document.createElementNS
                     "http://www.w3.org/2000/svg" (. jsObj -name)) ]
-       
-        (if (. jsObj -attributes)
-          (if (=(.-length keys)2)
-            
+
+
+        (goog.object.forEach jsObj (fn [ val name jsObj ]
+          (cond
+                                      
+           (goog.string.contains  name "attributes")
             (goog.object.forEach (. jsObj -attributes)
-                (fn [val name jsObj]
-                  (.setAttribute tag name val)))
+               (fn [val name jsObj] (.setAttribute tag name val)))
             
-            (do
-              (goog.object.forEach (. jsObj -attributes)
-                (fn [val name jsObj]
-                  (.setAttribute tag name val)))
-              (.forEach (.slice keys 2 (. keys -length))
-                  (fn [val index arr ]
-                     (.appendChild tag (.object->node this tag (aget jsObj val)))))))
-                      
-         (.forEach (.slice keys 1 (. keys -length))
-             (fn [val index arr] 
-               (.appendChild tag (.object->node this tag (aget jsObj val))))))
-        
-  tag )))
+           (goog.string.contains name "_id")
+              (.setAttribute tag "id" val)
+
+           (goog.string.contains name "Δ") 
+              (.appendChild tag (.object->node this tag val))
+           
+   ))) tag))
+ )
+
 
 
 (defn initSVGnode [ jsObj container ] 
@@ -97,6 +84,7 @@
 
     (.appendChild svgRoot domtag)
     (if (. jsObj -listeners) (sym-log.cljs.events.attach-listeners jsObj domtag))))
+
 
 (defn sanitize-svg [ filestr input-type  ]
 
@@ -164,12 +152,12 @@
   )
 )
 
-(defn svgTags->JSONstr [tagArray]
+(defn svgTags->JSON [tagArray]
   "takes an array of svgTags (produce with getSvgTags and returns a JSON string"
   
   (let [ index (atom 0)
          eoa (-(.-length tagArray)1)
-         JSONstr (atom (str))
+         JSON (atom (str))
          level (atom 0)
          levelMx (array) ]
   
@@ -180,14 +168,14 @@
            (do
              (if-not (aget levelMx @level) (aset levelMx @level (array)))
              (let [prefix
-                   (if (= 0 (.-length (aget levelMx @level))) (do (aset levelMx @level 0 "\"#\":") )
+                   (if (= 0 (.-length (aget levelMx @level))) (do (aset levelMx @level 0 "\"Δ\":") )
                       (do (aset levelMx @level (.-length (aget levelMx @level))
-                        (str "\"" (goog.string.repeat "#" (+(.-length (aget levelMx @level))1)) "\":"))
+                        (str "\"" (goog.string.repeat "Δ" (+(.-length (aget levelMx @level))1)) "\":"))
                        (aget levelMx @level (-(.-length (aget levelMx @level)) 1))))     ]
 
               (if (= 0 @level)
-                 (swap! JSONstr str (svgTag->JSON tagStr))
-                 (swap! JSONstr str "," prefix (svgTag->JSON tagStr)))
+                 (swap! JSON str (svgTag->JSON tagStr))
+                 (swap! JSON str "," prefix (svgTag->JSON tagStr)))
                )
              (swap! level inc)
            )
@@ -197,31 +185,31 @@
              (if-not (aget levelMx @level) (aset levelMx @level (array)))
              (let [prefix
                       (if (= 0 (.-length (aget levelMx @level)))
-                        (do (aset levelMx @level 0 "\"#\":"))
+                        (do (aset levelMx @level 0 "\"Δ\":"))
                         (do (aset levelMx @level (.-length (aget levelMx @level))
-                                  (str "\"" (goog.string.repeat "#" (+(.-length (aget levelMx @level))1)) "\":"))
+                                  (str "\"" (goog.string.repeat "Δ" (+(.-length (aget levelMx @level))1)) "\":"))
                             (aget levelMx @level (-(.-length (aget levelMx @level)) 1))))    ]
 
                (if (= 0 @level)
-                 (swap! JSONstr str (svgTag->JSON tagStr))
-                 (swap! JSONstr str "," prefix (svgTag->JSON tagStr)))
+                 (swap! JSON str (svgTag->JSON tagStr))
+                 (swap! JSON str "," prefix (svgTag->JSON tagStr)))
             ))
 
         (= "closingTag" (svgTagType? tagStr))
             (do    
-                (swap! JSONstr str "}")
+                (swap! JSON str "}")
                 (swap! level dec))
              
         ) ; end cond
        (recur (aget tagArray (swap! index inc)))
       ) ; end when
     ) ; end loop
-   @JSONstr ) ; end let
+   @JSON ) ; end let
  ) ; end func
 
 
 (defn svgTag->JSON [tagStr]
-  "a helper function for svgTags->JSONstr"
+  "a helper function for svgTags->JSON"
   
   (let
       [idx (atom 1) 
