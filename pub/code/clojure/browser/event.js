@@ -14,8 +14,8 @@ if(and__3941__auto__)
 })())
 {return this$.clojure$browser$event$EventType$event_types$arity$1(this$);
 } else
-{var x__2618__auto__ = (((this$ == null))?null:this$);
-return (function (){var or__3943__auto__ = (clojure.browser.event.event_types[goog.typeOf(x__2618__auto__)]);
+{var x__2623__auto__ = (((this$ == null))?null:this$);
+return (function (){var or__3943__auto__ = (clojure.browser.event.event_types[goog.typeOf(x__2623__auto__)]);
 if(or__3943__auto__)
 {return or__3943__auto__;
 } else
@@ -31,19 +31,19 @@ if(or__3943__auto____$1)
 });
 Element.prototype.clojure$browser$event$EventType$ = true;
 Element.prototype.clojure$browser$event$EventType$event_types$arity$1 = (function (this$){
-return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (p__4063){
-var vec__4064 = p__4063;
-var k = cljs.core.nth.call(null,vec__4064,0,null);
-var v = cljs.core.nth.call(null,vec__4064,1,null);
+return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (p__6487){
+var vec__6488 = p__6487;
+var k = cljs.core.nth.call(null,vec__6488,0,null);
+var v = cljs.core.nth.call(null,vec__6488,1,null);
 return cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null,k.toLowerCase()),v], true);
 }),cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
 });
 goog.events.EventTarget.prototype.clojure$browser$event$EventType$ = true;
 goog.events.EventTarget.prototype.clojure$browser$event$EventType$event_types$arity$1 = (function (this$){
-return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (p__4065){
-var vec__4066 = p__4065;
-var k = cljs.core.nth.call(null,vec__4066,0,null);
-var v = cljs.core.nth.call(null,vec__4066,1,null);
+return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (p__6489){
+var vec__6490 = p__6489;
+var k = cljs.core.nth.call(null,vec__6490,0,null);
+var v = cljs.core.nth.call(null,vec__6490,1,null);
 return cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null,k.toLowerCase()),v], true);
 }),cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
 });
