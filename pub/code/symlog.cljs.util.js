@@ -2,6 +2,7 @@ goog.provide('symlog.cljs.util');
 goog.require('cljs.core');
 goog.require('symlog.cljs.dom');
 goog.require('symlog.cljs.dom');
+goog.require('goog.fx.Dragger');
 goog.require('goog.ui.IdGenerator');
 symlog.cljs.util.function_QMARK_ = (function function_QMARK_(testobj){
 if(cljs.core._EQ_.call(null,cljs.core.type.call(null,testobj),cljs.core.type.call(null,Function)))

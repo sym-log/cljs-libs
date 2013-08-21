@@ -1,44 +1,32 @@
-
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8"></meta>
     <title>Browser-connected REPL</title>
-
-
   </head>
-  <body>
 
 
- <script type="text/javascript" src="code/index.js"></script>
- <script type="text/javascript" src="code/pouchdb-nightly.min.js"></script> 
- 
+ <body>
 
- <script type="text/javascript">
+  <script type="text/javascript" src="code/index.js"></script>
+  <script type="text/javascript" src="code/pouchdb-nightly.min.js"></script> 
+  <script type="text/javascript">
        goog.require('browser_connect');                    
- </script>  
+  </script>  
 
- 
+
 
   <div id="containerDiv"> 
- 
- <svg  id="svgRoot" xmlns="http://www.w3.org/2000/svg" style="top:50%; position:absolute; left:50%;" height="0" width="0" overflow="visible">
-<!--
-   <svg id="svg1" overflow="visible" >
-     <rect rx="2.2485" ry="2.8907" height="110" width="230" y="-55" x="-115" fill="#000080"/>
-     <rect rx="2.4973" ry="3.0872" height="78.571" width="200.71" y="-39.286" x="-100.36" fill="#800080"/>
-   </svg>
 
--->
-
+<svg id="svgRoot" overflow=visible height=0 width=0 style="position:absolute; top:50%; left:50%">
 
 </svg>
+
+   
 
   </div>   
 
 
 
-
-
  </body>
 </html>
-

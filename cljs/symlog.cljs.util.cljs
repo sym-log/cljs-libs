@@ -1,5 +1,6 @@
 (ns symlog.cljs.util
-  (:require [goog.ui.IdGenerator])
+  (:require [goog.ui.IdGenerator]
+            [goog.fx.Dragger])
            
   (:use [symlog.cljs.dom :only [by-id listen]]))
 
